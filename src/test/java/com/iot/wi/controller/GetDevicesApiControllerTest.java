@@ -2,7 +2,7 @@ package com.iot.wi.controller;
 
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -50,7 +50,7 @@ public class GetDevicesApiControllerTest {
 		try {
 			when(wiService.getDevices()).thenReturn(new ArrayList<DeviceDto>());
 
-			this.mockMvc.perform(post("/getDevices")).andDo(print()).andExpect(status().isOk());
+			this.mockMvc.perform(get("/getDevices")).andDo(print()).andExpect(status().isOk());
 		} catch (JsonProcessingException e) {
 			fail(e.getMessage());
 		} catch (Exception e) {
@@ -63,7 +63,7 @@ public class GetDevicesApiControllerTest {
 		try {
 			when(wiService.getDevices()).thenReturn(null);
 
-			this.mockMvc.perform(post("/getDevices")).andDo(print()).andExpect(status().isBadRequest());
+			this.mockMvc.perform(get("/getDevices")).andDo(print()).andExpect(status().isBadRequest());
 		} catch (JsonProcessingException e) {
 			fail(e.getMessage());
 		} catch (Exception e) {
