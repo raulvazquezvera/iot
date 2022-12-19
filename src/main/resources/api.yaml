@@ -1,0 +1,158 @@
+openapi: "3.0.0"
+info:
+  description: "OpenAPI WI"
+  version: "1.0.0"
+  title: "WI API"
+servers:
+  - url: http://localhost:8005/
+    description: "localhost"
+paths:
+  /addDevice:
+    post:
+      summary: "Add device to inventory"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              $ref: "#/components/schemas/AddDevice"
+      responses:
+        200:
+          description: "Device added"
+        400:
+          description: "BadRequest"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                $ref: "#/components/schemas/Error"
+        500:
+          description: "Internal server error"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                $ref: "#/components/schemas/Error"
+        503:
+          description: "Service unavailable"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                $ref: "#/components/schemas/Error"
+  /removeDevice:
+    delete:
+      summary: "Remove device from inventory"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              $ref: "#/components/schemas/RemoveDevice"
+      responses:
+        200:
+          description: "Device removed"
+        400:
+          description: "BadRequest"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                $ref: "#/components/schemas/Error"
+        500:
+          description: "Internal server error"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                $ref: "#/components/schemas/Error"
+        503:
+          description: "Service unavailable"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                $ref: "#/components/schemas/Error"
+  /getDevices:
+    get:
+      summary: "Find all devices from inventory"
+      responses:
+        200:
+          description: "List of Devices"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Device"
+        400:
+          description: "BadRequest"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                $ref: "#/components/schemas/Error"
+        500:
+          description: "Internal server error"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                $ref: "#/components/schemas/Error"
+        503:
+          description: "Service unavailable"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    AddDevice:
+      type: "object"
+      required:
+        - "serialNumber"
+        - "pinCode"
+      properties:
+        serialNumber:
+          type: "integer"
+          example: "01234567"
+        pinCode:
+          type: "string"
+          example: "1234567"
+    RemoveDevice:
+      type: "object"
+      required:
+        - "serialNumber"
+      properties:
+        serialNumber:
+          type: "integer"
+          example: "01234567"
+    Device:
+      type: "object"
+      required:
+        - "serialNumber"
+        - "temperature"
+        - "status"
+      properties:
+        serialNumber:
+          type: "integer"
+          example: "01234567"
+        temperature:
+          type: "integer"
+          example: "3"
+        status:
+          type: "string"
+          example: "READY"
+    Error:
+      type: "object"
+      properties:
+        code:
+          type: "integer"
+          format: "32"
+        message:
+          type: "string"
+        description:
+          type: "string"

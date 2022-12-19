@@ -1,0 +1,30 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    properties:
+      hibernate:
+        show-sql: true
+    hibernate:
+      ddl-auto: 
+      use-new-id-generator-mappings: false
+  h2:
+    console:
+      enabled: true
+  sql:
+    init:
+      mode: always
+  jackson:
+    date-format: org.openapitools.RFC3339DateFormat
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+server:
+  port: 8085
+validation:
+  pinCode:
+    size:
+      errorlength: PinCode length should be 7
